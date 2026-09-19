@@ -1,55 +1,147 @@
-﻿Alumno alumno1 = new Alumno("Bautista", 1234);
-Alumno alumno2 = new Alumno("Juan", 5678);
+﻿List<Alumno> alumnos = new List<Alumno>();
 
-bool notasAlumno1 = alumno1.CargarNotas(8.5, 7.5);
-bool notasAlumno2 = alumno2.CargarNotas(4, 5);
+int opcion = 0;
 
-if (!notasAlumno1)
+while (opcion != 6)
 {
-    Console.WriteLine("Las notas del primer alumno no son válidas.");
-}
+    Console.WriteLine();
+    Console.WriteLine("1. Agregar alumno");
+    Console.WriteLine("2. Listar alumnos");
+    Console.WriteLine("3. Buscar alumno por legajo");
+    Console.WriteLine("4. Mostrar promedio general");
+    Console.WriteLine("5. Mostrar cantidad de aprobados");
+    Console.WriteLine("6. Salir");
+    Console.Write("Elegí una opción: ");
 
-if (!notasAlumno2)
-{
-    Console.WriteLine("Las notas del segundo alumno no son válidas.");
-}
+    bool opcionValida = int.TryParse(Console.ReadLine(), out opcion);
 
-Console.WriteLine($"Primer alumno: {alumno1.Nombre} - Legajo: {alumno1.Legajo}");
-Console.WriteLine($"Segundo alumno: {alumno2.Nombre} - Legajo: {alumno2.Legajo}");
+    if (!opcionValida)
+    {
+        Console.WriteLine("La opción ingresada no es válida.");
+        continue;
+    }
 
-alumno1.Nombre = "Pedro";
+    switch (opcion)
+    {
+        case 1:
+            Console.Write("Nombre: ");
+            string nombre = Console.ReadLine() ?? "";
 
-Console.WriteLine();
-Console.WriteLine("Después de cambiar el nombre del primero:");
-Console.WriteLine($"Primer alumno: {alumno1.Nombre}");
-Console.WriteLine($"Segundo alumno: {alumno2.Nombre}");
+            Console.Write("Legajo: ");
+            bool legajoValido = int.TryParse(Console.ReadLine(), out int legajo);
 
-// Alumno alumno3 = new Alumno();
-// Da error porque el constructor necesita nombre y legajo.
+            Console.Write("Primera nota: ");
+            bool nota1Valida = double.TryParse(Console.ReadLine(), out double nota1);
 
-// alumno1.Nota1 = 47;
-// Da error porque Nota1 solamente se puede modificar desde la clase.
+            Console.Write("Segunda nota: ");
+            bool nota2Valida = double.TryParse(Console.ReadLine(), out double nota2);
 
-Console.WriteLine();
-Console.WriteLine($"Promedio de {alumno1.Nombre}: {alumno1.Promedio()}");
-Console.WriteLine($"Está aprobado: {alumno1.EstaAprobado()}");
+            if (!legajoValido || !nota1Valida || !nota2Valida)
+            {
+                Console.WriteLine("Alguno de los datos ingresados no es válido.");
+                break;
+            }
 
-Console.WriteLine();
-Console.WriteLine($"Promedio de {alumno2.Nombre}: {alumno2.Promedio()}");
-Console.WriteLine($"Está aprobado: {alumno2.EstaAprobado()}");
+            Alumno nuevoAlumno = new Alumno(nombre, legajo);
 
-alumno2.SubirNota();
+            if (nuevoAlumno.CargarNotas(nota1, nota2))
+            {
+                alumnos.Add(nuevoAlumno);
+                Console.WriteLine("Alumno agregado.");
+            }
+            else
+            {
+                Console.WriteLine("Las notas deben estar entre 0 y 10.");
+            }
 
-Console.WriteLine();
-Console.WriteLine($"Notas de {alumno2.Nombre} después de subirlas: {alumno2.Nota1} y {alumno2.Nota2}");
+            break;
 
-Console.WriteLine();
-Console.WriteLine(alumno1);
-Console.WriteLine(alumno2);
+        case 2:
+            if (alumnos.Count == 0)
+            {
+                Console.WriteLine("Todavía no hay alumnos.");
+            }
+            else
+            {
+                foreach (Alumno alumno in alumnos)
+                {
+                    Console.WriteLine(alumno);
+                }
+            }
 
-bool cargaInvalida = alumno1.CargarNotas(47, 8);
+            break;
 
-if (!cargaInvalida)
-{
-    Console.WriteLine("Las notas ingresadas no son válidas.");
+        case 3:
+            Console.Write("Ingresá el legajo: ");
+            bool busquedaValida = int.TryParse(Console.ReadLine(), out int legajoBuscado);
+
+            if (!busquedaValida)
+            {
+                Console.WriteLine("El legajo ingresado no es válido.");
+                break;
+            }
+
+            Alumno? alumnoEncontrado = null;
+
+            foreach (Alumno alumno in alumnos)
+            {
+                if (alumno.Legajo == legajoBuscado)
+                {
+                    alumnoEncontrado = alumno;
+                }
+            }
+
+            if (alumnoEncontrado == null)
+            {
+                Console.WriteLine("No existe un alumno con ese legajo.");
+            }
+            else
+            {
+                Console.WriteLine(alumnoEncontrado);
+            }
+
+            break;
+
+        case 4:
+            if (alumnos.Count == 0)
+            {
+                Console.WriteLine("No se puede calcular el promedio porque no hay alumnos.");
+            }
+            else
+            {
+                double sumaPromedios = 0;
+
+                foreach (Alumno alumno in alumnos)
+                {
+                    sumaPromedios = sumaPromedios + alumno.Promedio();
+                }
+
+                double promedioGeneral = sumaPromedios / alumnos.Count;
+                Console.WriteLine($"Promedio general: {promedioGeneral}");
+            }
+
+            break;
+
+        case 5:
+            int cantidadAprobados = 0;
+
+            foreach (Alumno alumno in alumnos)
+            {
+                if (alumno.EstaAprobado())
+                {
+                    cantidadAprobados++;
+                }
+            }
+
+            Console.WriteLine($"Cantidad de aprobados: {cantidadAprobados}");
+            break;
+
+        case 6:
+            Console.WriteLine("Programa finalizado.");
+            break;
+
+        default:
+            Console.WriteLine("La opción ingresada no existe.");
+            break;
+    }
 }
