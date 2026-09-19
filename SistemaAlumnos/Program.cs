@@ -27,3 +27,9 @@ alumno2.SubirNota();
 
 Console.WriteLine();
 Console.WriteLine($"Notas de {alumno2.Nombre} después de subirlas: {alumno2.Nota1} y {alumno2.Nota2}");
+Console.WriteLine();
+Console.WriteLine(alumno1);
+Console.WriteLine(alumno2);
+
+// Sin override, el compilador avisa que ToString() oculta
+// el método heredado de object.
