@@ -11,4 +11,26 @@ public class Alumno
         Nota1 = nota1;
         Nota2 = nota2;
     }
+    public double Promedio()
+    {
+        return (Nota1 + Nota2) / 2;
+    }
+
+    public bool EstaAprobado()
+    {
+        return Promedio() >= 6;
+    }
+
+    public void SubirNota()
+    {
+        if (Nota1 < 10)
+        {
+            Nota1 = Nota1 + 1;
+        }
+
+        if (Nota2 < 10)
+        {
+            Nota2 = Nota2 + 1;
+        }
+    }
 }

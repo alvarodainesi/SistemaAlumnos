@@ -14,3 +14,16 @@ Console.WriteLine($"Segundo alumno: {alumno2.Nombre}");
 
 // Alumno alumno3 = new Alumno();
 // Da error porque el constructor necesita nombre, legajo y las dos notas.
+
+Console.WriteLine();
+Console.WriteLine($"Promedio de {alumno1.Nombre}: {alumno1.Promedio()}");
+Console.WriteLine($"Está aprobado: {alumno1.EstaAprobado()}");
+
+Console.WriteLine();
+Console.WriteLine($"Promedio de {alumno2.Nombre}: {alumno2.Promedio()}");
+Console.WriteLine($"Está aprobado: {alumno2.EstaAprobado()}");
+
+alumno2.SubirNota();
+
+Console.WriteLine();
+Console.WriteLine($"Notas de {alumno2.Nombre} después de subirlas: {alumno2.Nota1} y {alumno2.Nota2}");
