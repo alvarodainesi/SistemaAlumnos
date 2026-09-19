@@ -1,7 +1,24 @@
 ﻿Alumno alumnoEjemplo = new Alumno("Ana Pérez", 40111222, 1234);
 Profesor profesor = new Profesor("Marta Díaz", 30111222, "Programación");
 Preceptor preceptor = new Preceptor("Juan López", 35123456, "Primero A");
+alumnoEjemplo.CargarNotas(8, 6);
 
+Materia materia1 = new Materia("PROG1", "Programación I", 128);
+Materia materia2 = new Materia("BD1", "Base de Datos", 96);
+
+List<IExportable> exportables = new List<IExportable>();
+
+exportables.Add(alumnoEjemplo);
+exportables.Add(profesor);
+exportables.Add(materia1);
+exportables.Add(materia2);
+
+foreach (IExportable exportable in exportables)
+{
+    Console.WriteLine(exportable.ExportarLinea());
+}
+
+Console.WriteLine();
 List<Persona> personas = new List<Persona>();
 
 personas.Add(alumnoEjemplo);
@@ -163,3 +180,4 @@ while (opcion != 6)
             break;
     }
 }
+// Aparecieron 3 errores porque Alumno, Profesor y Materia no implementan ExportarEncabezado.
