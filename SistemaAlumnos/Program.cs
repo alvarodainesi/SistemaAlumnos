@@ -1,8 +1,19 @@
-﻿Profesor profesor = new Profesor("Carlos", 30111222, "Programación");
+﻿Alumno alumnoEjemplo = new Alumno("Ana Pérez", 40111222, 1234);
+Profesor profesor = new Profesor("Marta Díaz", 30111222, "Programación");
+Preceptor preceptor = new Preceptor("Juan López", 35123456, "Primero A");
 
-Console.WriteLine($"Profesor: {profesor.Nombre}");
-Console.WriteLine($"Documento: {profesor.Documento}");
-Console.WriteLine($"Materia: {profesor.Materia}");
+List<Persona> personas = new List<Persona>();
+
+personas.Add(alumnoEjemplo);
+personas.Add(profesor);
+personas.Add(preceptor);
+
+foreach (Persona persona in personas)
+{
+    Console.WriteLine(persona.Presentarse());
+}
+
+Console.WriteLine();
 List<Alumno> alumnos = new List<Alumno>();
 
 int opcion = 0;
