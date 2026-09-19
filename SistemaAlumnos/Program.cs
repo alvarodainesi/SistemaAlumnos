@@ -1,4 +1,9 @@
-﻿List<Alumno> alumnos = new List<Alumno>();
+﻿Profesor profesor = new Profesor("Carlos", 30111222, "Programación");
+
+Console.WriteLine($"Profesor: {profesor.Nombre}");
+Console.WriteLine($"Documento: {profesor.Documento}");
+Console.WriteLine($"Materia: {profesor.Materia}");
+List<Alumno> alumnos = new List<Alumno>();
 
 int opcion = 0;
 
@@ -26,6 +31,8 @@ while (opcion != 6)
         case 1:
             Console.Write("Nombre: ");
             string nombre = Console.ReadLine() ?? "";
+            Console.Write("Documento: ");
+            bool documentoValido = int.TryParse(Console.ReadLine(), out int documento);
 
             Console.Write("Legajo: ");
             bool legajoValido = int.TryParse(Console.ReadLine(), out int legajo);
@@ -36,13 +43,13 @@ while (opcion != 6)
             Console.Write("Segunda nota: ");
             bool nota2Valida = double.TryParse(Console.ReadLine(), out double nota2);
 
-            if (!legajoValido || !nota1Valida || !nota2Valida)
+            if (!documentoValido || !legajoValido || !nota1Valida || !nota2Valida)
             {
                 Console.WriteLine("Alguno de los datos ingresados no es válido.");
                 break;
             }
 
-            Alumno nuevoAlumno = new Alumno(nombre, legajo);
+            Alumno nuevoAlumno = new Alumno(nombre, documento, legajo);
 
             if (nuevoAlumno.CargarNotas(nota1, nota2))
             {
